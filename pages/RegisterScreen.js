@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons'; // Importar ícones para o olho da senha
+import { Feather } from '@expo/vector-icons'; 
 
 export default function RegisterScreen({ navigation, db }) {
     const [nome, setNome] = useState('');
@@ -11,7 +11,6 @@ export default function RegisterScreen({ navigation, db }) {
     const [endereco, setEndereco] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    // Novos estados para controlar a visibilidade das senhas
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -99,7 +98,6 @@ export default function RegisterScreen({ navigation, db }) {
                     autoCapitalize="none"
                 />
 
-                {/* Campo de Senha com botão de visualização */}
                 <View style={styles.passwordInputContainer}>
                     <TextInput
                         style={styles.passwordInput}
@@ -107,21 +105,20 @@ export default function RegisterScreen({ navigation, db }) {
                         placeholderTextColor="#A0A0A0"
                         value={password}
                         onChangeText={setPassword}
-                        secureTextEntry={!showPassword} // Controlado pelo estado
+                        secureTextEntry={!showPassword} 
                     />
                     <TouchableOpacity
                         style={styles.eyeIcon}
-                        onPress={() => setShowPassword(!showPassword)} // Alterna a visibilidade
+                        onPress={() => setShowPassword(!showPassword)}
                     >
                         <Feather
-                            name={showPassword ? 'eye' : 'eye-off'} // Altera o ícone
+                            name={showPassword ? 'eye' : 'eye-off'}
                             size={24}
                             color="#A0A0A0"
                         />
                     </TouchableOpacity>
                 </View>
 
-                {/* Campo de Confirmação de Senha com botão de visualização */}
                 <View style={styles.passwordInputContainer}>
                     <TextInput
                         style={styles.passwordInput}
@@ -129,14 +126,14 @@ export default function RegisterScreen({ navigation, db }) {
                         placeholderTextColor="#A0A0A0"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
-                        secureTextEntry={!showConfirmPassword} // Controlado pelo estado
+                        secureTextEntry={!showConfirmPassword} 
                     />
                     <TouchableOpacity
                         style={styles.eyeIcon}
-                        onPress={() => setShowConfirmPassword(!showConfirmPassword)} // Alterna a visibilidade
+                        onPress={() => setShowConfirmPassword(!showConfirmPassword)} 
                     >
                         <Feather
-                            name={showConfirmPassword ? 'eye' : 'eye-off'} // Altera o ícone
+                            name={showConfirmPassword ? 'eye' : 'eye-off'} 
                             size={24}
                             color="#A0A0A0"
                         />
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 2,
     },
-    passwordInputContainer: { // Novo estilo para o container do input de senha com ícone
+    passwordInputContainer: { 
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
@@ -227,14 +224,14 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 2,
     },
-    passwordInput: { // Estilo para o TextInput dentro do container de senha
-        flex: 1, // Faz o TextInput ocupar o espaço restante
+    passwordInput: { 
+        flex: 1,
         height: '100%',
         paddingHorizontal: 15,
         fontSize: 16,
         color: '#333',
     },
-    eyeIcon: { // Estilo para o botão do ícone de olho
+    eyeIcon: {
         paddingHorizontal: 15,
     },
     registerButton: {

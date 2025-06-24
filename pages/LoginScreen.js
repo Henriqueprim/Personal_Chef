@@ -49,16 +49,14 @@ function LoginScreen({ navigation, db }) {
     };
 
     return (
-        // Usamos KeyboardAvoidingView para ajustar a view automaticamente quando o teclado aparece
-        // O behavior 'padding' é comum no iOS, 'height' ou 'position' podem ser testados para Android
         <KeyboardAvoidingView
             style={styles.keyboardAvoidingContainer}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} // Ajuste conforme necessário
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
         >
             <ScrollView
-                contentContainerStyle={styles.container} // Aplica os estilos do container ao conteúdo do scroll
-                keyboardShouldPersistTaps="handled" // Garante que toques fora do teclado/inputs funcionem
+                contentContainerStyle={styles.container} 
+                keyboardShouldPersistTaps="handled" 
             >
                 <Image
                     source={require('../images/logoCut.png')}
@@ -114,10 +112,10 @@ function LoginScreen({ navigation, db }) {
 
 const styles = StyleSheet.create({
     keyboardAvoidingContainer: {
-        flex: 1, // Permite que o KeyboardAvoidingView ocupe todo o espaço
+        flex: 1, 
     },
     container: {
-        flexGrow: 1, // Importante para que o ScrollView possa crescer
+        flexGrow: 1, 
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,

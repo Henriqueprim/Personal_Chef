@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndi
 import { useCart } from '../context/CartContext';
 import { AntDesign } from '@expo/vector-icons';
 
-// IMPORTAR TODAS AS SUAS IMAGENS LOCAIS AQUI
 const localRecipeImages = {
     'arroz.png': require('../images/arroz.png'),
     'feijao.webp': require('../images/feijao.webp'),
@@ -23,26 +22,22 @@ export default function HomeScreen({ navigation, route, db }) {
 
     const { userId } = route.params || {};
 
-    // useLayoutEffect é ideal para configurar opções de navegação
-    // pois ele é executado de forma síncrona após as renderizações, antes da tela ser pintada.
+
     useLayoutEffect(() => {
-        // console.log("DEBUG HOME: useLayoutEffect disparado. userId:", userId); // Log para verificar se está rodando
         navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity
                     onPress={() => {
-                        // console.log("DEBUG HOME: Botão de Histórico Pressionado. userId:", userId); // Log ao clicar
                         navigation.navigate('OrderHistory', { userId: userId });
                     }}
                     style={{ marginRight: 15 }}
-                    // hitSlop aumenta a área clicável sem alterar o visual do ícone, pode ajudar na interação
                     hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
                     <AntDesign name="profile" size={24} color="#007BFF" />
                 </TouchableOpacity>
             ),
         });
-    }, [navigation, userId]); // Dependências: navigation é estável, userId pode mudar no login
+    }, [navigation, userId]);
 
     useEffect(() => {
         const loadRecipes = async () => {

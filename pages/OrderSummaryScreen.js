@@ -4,7 +4,6 @@ import { useCart } from '../context/CartContext';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { gerarListaDeCompras } from '../database/db';
 
-// Função auxiliar para capitalizar a primeira letra de uma string
 const capitalizeFirstLetter = (string) => {
     if (!string) return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -71,9 +70,7 @@ export default function OrderSummaryScreen({ navigation, route, db }) {
         hideDatePicker();
     };
 
-    /**
-     * Finaliza o pedido: salva no DB e gera a lista de compras.
-     */
+
     const handleFinalizeOrder = async () => {
         if (recipesDetails.length === 0) {
             Alert.alert('Carrinho Vazio', 'Por favor, adicione itens ao seu carrinho antes de finalizar o pedido.');
@@ -94,7 +91,6 @@ export default function OrderSummaryScreen({ navigation, route, db }) {
 
         setFinalizingOrder(true);
         try {
-            // 1. Salvar o pedido na tb_order
             const orderResult = await db.runAsync(
                 `INSERT INTO tb_order (id_user, order_date) VALUES (?, ?);`,
                 [userId, orderDate.toISOString().split('T')[0]]
@@ -105,7 +101,6 @@ export default function OrderSummaryScreen({ navigation, route, db }) {
                 throw new Error('Falha ao criar o pedido. ID do pedido não retornado.');
             }
 
-            // 2. Salvar os itens do pedido na tb_order_recipe
             for (const item of recipesDetails) {
                 await db.runAsync(
                     `INSERT INTO tb_order_recipe (id_order, id_recipe, multiplicador) VALUES (?, ?, ?);`,
@@ -113,11 +108,9 @@ export default function OrderSummaryScreen({ navigation, route, db }) {
                 );
             }
 
-            // 3. Gerar a lista de compras
             const generatedList = await gerarListaDeCompras(db, orderId);
             setShoppingList(generatedList);
 
-            // 4. Limpar o carrinho
             clearCart();
 
             Alert.alert('Pedido Finalizado!', 'Seu pedido foi salvo e a lista de compras foi gerada.', [
@@ -170,13 +163,13 @@ export default function OrderSummaryScreen({ navigation, route, db }) {
                     <Text style={styles.noItemsText}>Nenhum item na lista de compras.</Text>
                 )}
                 <TouchableOpacity
-                    style={styles.backToHomeButton} // Mantive o mesmo estilo, mas você pode criar um novo
+                    style={styles.backToHomeButton} 
                     onPress={() => {
-                        setShoppingList(null); // Limpa a lista de compras exibida
-                        navigation.navigate('OrderHistory', { userId: userId }); // Redireciona para OrderHistory
+                        setShoppingList(null); 
+                        navigation.navigate('OrderHistory', { userId: userId }); 
                     }}
                 >
-                    <Text style={styles.backToHomeButtonText}>Ver meus pedidos</Text> {/* Texto alterado */}
+                    <Text style={styles.backToHomeButtonText}>Ver meus pedidos</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -352,7 +345,7 @@ const styles = StyleSheet.create({
         color: '#333',
         fontWeight: '500',
     },
-    backToHomeButton: { // Este estilo será usado para o botão "Ver meus pedidos"
+    backToHomeButton: { 
         marginTop: 30,
         backgroundColor: '#007BFF',
         borderRadius: 30,
@@ -366,7 +359,7 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 6,
     },
-    backToHomeButtonText: { // Este estilo será usado para o texto "Ver meus pedidos"
+    backToHomeButtonText: { 
         color: '#FFFFFF',
         fontSize: 18,
         fontWeight: 'bold',

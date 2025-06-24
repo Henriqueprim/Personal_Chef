@@ -1,14 +1,14 @@
 {
   "expo": {
     "name": "PersonalChef",
-    "slug": "PersonalChef",
+    "slug": "personalchef",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,17 +16,21 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
+      "package": "personal.chef.app",
+      "versionCode": 1,
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
       "expo-sqlite"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6140d10a-cd96-4a19-ab11-3aece9423192"
+      }
+    },
+    "owner": "henriqueprim"
   }
 }

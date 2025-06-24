@@ -1,6 +1,5 @@
-// A instância do DB será passada como argumento para as funções.
 
-async function criarTabelas(db) { // db agora é um parâmetro
+async function criarTabelas(db) { 
   await db.withTransactionAsync(async () => {
     await db.execAsync(`
       CREATE TABLE IF NOT EXISTS tb_ingredient (
@@ -53,7 +52,7 @@ async function criarTabelas(db) { // db agora é um parâmetro
   });
 }
 
-async function popularBanco(db) { // db agora é um parâmetro
+async function popularBanco(db) {
   await db.withTransactionAsync(async () => {
     const ingredientes = [
       'arroz', 'alho', 'óleo', 'cebola', 'feijão carioca', 'carne moída',
@@ -68,7 +67,7 @@ async function popularBanco(db) { // db agora é um parâmetro
     const receitas = [
       {
         nome: 'Arroz temperado', rendimento: '4 porções', descricao: 'Arroz branco temperado com alho refogado.',
-        path_imagem: 'arroz.png', // Apenas o nome do arquivo
+        path_imagem: 'arroz.png',
         ingredientes: [['arroz', 400], ['alho', 10], ['óleo', 20]]
       },
       {

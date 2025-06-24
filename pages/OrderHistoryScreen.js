@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { gerarListaDeCompras } from '../database/db'; // Importa a função para gerar lista de compras
+import { gerarListaDeCompras } from '../database/db'; 
 
-// Função auxiliar para capitalizar a primeira letra de uma string
 const capitalizeFirstLetter = (string) => {
     if (!string) return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 export default function OrderHistoryScreen({ navigation, route, db }) {
-    const { userId } = route.params || {}; // Obtém o userId dos parâmetros de navegação
+    const { userId } = route.params || {}; 
     const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [error, setError] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedOrderShoppingList, setSelectedOrderShoppingList] = useState([]);
-    const [selectedOrderRecipes, setSelectedOrderRecipes] = useState([]); // Novo estado para as receitas do pedido
-    const [loadingOrderDetails, setLoadingOrderDetails] = useState(false); // Novo estado para carregamento de detalhes
+    const [selectedOrderRecipes, setSelectedOrderRecipes] = useState([]); 
+    const [loadingOrderDetails, setLoadingOrderDetails] = useState(false); 
 
     useEffect(() => {
         const loadOrders = async () => {
@@ -33,7 +32,6 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
             }
 
             try {
-                // Busca todos os pedidos para o userId logado, ordenados do mais recente para o mais antigo
                 const fetchedOrders = await db.getAllAsync(
                     `SELECT id, order_date FROM tb_order WHERE id_user = ? ORDER BY order_date DESC;`,
                     [userId]
@@ -49,20 +47,18 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
         };
 
         loadOrders();
-    }, [db, userId]); // Recarrega se o DB ou userId mudarem
+    }, [db, userId]);
 
-    const handleViewOrderDetails = async (orderId, orderDate) => { // Agora recebe a data também
+    const handleViewOrderDetails = async (orderId, orderDate) => { 
         if (!db) {
             setError('Erro: Banco de dados não disponível.');
             return;
         }
-        setLoadingOrderDetails(true); // Ativa o loading para os detalhes do modal
+        setLoadingOrderDetails(true); 
         try {
-            // 1. Gerar a lista de compras
             const list = await gerarListaDeCompras(db, orderId);
             setSelectedOrderShoppingList(list);
 
-            // 2. Buscar as receitas associadas a este pedido e suas quantidades
             const recipesInOrder = await db.getAllAsync(
                 `
                 SELECT
@@ -79,25 +75,24 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
             );
             setSelectedOrderRecipes(recipesInOrder);
 
-            // Armazena a data do pedido selecionado para exibir no modal
-            setSelectedOrderDate(orderDate); // Você pode adicionar um state para isso se quiser exibir a data no modal
+            
+            setSelectedOrderDate(orderDate); 
 
-            setIsModalVisible(true); // Abre o modal
+            setIsModalVisible(true); 
         } catch (err) {
             console.error('Erro ao carregar detalhes do pedido:', err);
             setError('Não foi possível carregar os detalhes deste pedido.');
         } finally {
-            setLoadingOrderDetails(false); // Desativa o loading
+            setLoadingOrderDetails(false); 
         }
     };
 
-    // Adicione um novo estado para a data do pedido selecionado no modal
     const [selectedOrderDate, setSelectedOrderDate] = useState('');
 
     const renderOrderItem = ({ item }) => (
         <TouchableOpacity
             style={styles.orderCard}
-            onPress={() => handleViewOrderDetails(item.id, item.order_date)} // Passa a data do pedido
+            onPress={() => handleViewOrderDetails(item.id, item.order_date)} 
         >
             <Text style={styles.orderDate}>Data do Pedido: {new Date(item.order_date).toLocaleDateString('pt-BR')}</Text>
             <Text style={styles.orderId}>Pedido #{item.id}</Text>
@@ -140,7 +135,6 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
                 />
             )}
 
-            {/* Modal para exibir os detalhes do pedido */}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -156,7 +150,6 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
                             <ActivityIndicator size="large" color="#007BFF" />
                         ) : (
                             <ScrollView style={styles.detailsScroll}>
-                                {/* Seção de Receitas no Pedido */}
                                 <Text style={styles.sectionTitle}>Receitas:</Text>
                                 {selectedOrderRecipes.length > 0 ? (
                                     selectedOrderRecipes.map((item, index) => (
@@ -168,7 +161,6 @@ export default function OrderHistoryScreen({ navigation, route, db }) {
                                     <Text style={styles.noItemsTextSmall}>Nenhuma receita neste pedido.</Text>
                                 )}
 
-                                {/* Seção da Lista de Compras */}
                                 <Text style={styles.sectionTitle}>Lista de Compras:</Text>
                                 {selectedOrderShoppingList.length > 0 ? (
                                     selectedOrderShoppingList.map((item, index) => (
@@ -285,14 +277,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+        backgroundColor: 'rgba(0,0,0,0.5)', 
     },
     modalContent: {
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
         padding: 25,
         width: '85%',
-        maxHeight: '80%', // Aumentado um pouco para caber mais conteúdo
+        maxHeight: '80%', 
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
@@ -303,13 +295,13 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10, // Ajustado para dar espaço para a data
+        marginBottom: 10,
         color: '#333',
     },
     modalDate: {
         fontSize: 16,
         color: '#777',
-        marginBottom: 20, // Espaço após a data
+        marginBottom: 20, 
     },
     detailsScroll: {
         width: '100%',
@@ -319,12 +311,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#333',
-        marginTop: 15, // Espaço entre as seções
+        marginTop: 15, 
         marginBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#EEE',
         paddingBottom: 5,
-        width: '100%', // Para a linha sublinhada
+        width: '100%', 
     },
     recipeItemText: {
         fontSize: 16,
@@ -332,7 +324,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         lineHeight: 22,
         textAlign: 'left',
-        width: '100%', // Para garantir que o texto não se quebre estranhamente
+        width: '100%', 
     },
     shoppingListItemText: {
         fontSize: 16,
@@ -340,9 +332,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         lineHeight: 22,
         textAlign: 'left',
-        width: '100%', // Para a linha sublinhada
+        width: '100%', 
     },
-    noItemsTextSmall: { // Novo estilo para mensagens de "nenhum item" dentro das seções
+    noItemsTextSmall: { 
         fontSize: 14,
         color: '#999',
         textAlign: 'center',

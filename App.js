@@ -4,19 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { openDatabaseAsync } from 'expo-sqlite';
 import { criarTabelas, popularBanco } from './database/db';
-// Não precisamos mais do AntDesign aqui, pois ele será importado na HomeScreen
 
 LogBox.ignoreLogs(['Warning: Text strings must be rendered within a <Text> component.']);
 
-// Importar os componentes de tela com nomes padronizados (verifique seus nomes de arquivo)
+
 import LoginScreen from './pages/LoginScreen';
 import RegisterScreen from './pages/RegisterScreen';
-import HomeScreen from './pages/HomeScreen'; // HomeScreen agora controlará seu próprio headerRight
+import HomeScreen from './pages/HomeScreen'; 
 import RecipeDetailScreen from './pages/RecipeDetailScreen';
 import OrderSummaryScreen from './pages/OrderSummaryScreen';
 import OrderHistoryScreen from './pages/OrderHistoryScreen';
 
-// Importar o provedor de contexto do carrinho
 import { CartProvider } from './context/CartContext';
 
 const Stack = createNativeStackNavigator();
@@ -63,14 +61,11 @@ function App() {
             {props => <RegisterScreen {...props} db={db} />}
           </Stack.Screen>
 
-          {/* Configuração da HomeScreen: Cabeçalho visível, sem botão de voltar.
-              O headerRight será definido dentro da própria HomeScreen. */}
           <Stack.Screen
             name="Home"
             options={{
               title: 'Personal Chef',
-              headerLeft: () => null, // Mantém a remoção do botão de voltar
-              // headerRight não está mais aqui, será definido pela HomeScreen
+              headerLeft: () => null, 
             }}
           >
             {props => <HomeScreen {...props} db={db} />}

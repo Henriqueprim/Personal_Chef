@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, Touchable
 import { useCart } from '../context/CartContext';
 import { AntDesign } from '@expo/vector-icons';
 
-// Função auxiliar para capitalizar a primeira letra de uma string
 const capitalizeFirstLetter = (string) => {
     if (!string) return '';
     return string.charAt(0).toUpperCase() + string.slice(1);
