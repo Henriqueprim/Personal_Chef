@@ -20,20 +20,49 @@
 * Pastas principais:
 
   * `App.js` – ponto de entrada do app;
-  * `screens/` – componentes de tela (ex: `Pedidos.js`, `ListaCompras.js`);
-  * `components/` – componentes reutilizáveis (ex: botões, cards);
-  * `assets/` – imagens, ícones e figurinhas.
+  * `pages/` – componentes de tela (ex: `LoginScreen.js`, `HomeScreen.js`);
+  * `images/` – imagens das receitas;
+  * `assets/` – Logo.png;
+  * `database/` - scripts de criação e queries do banco de dados
+  * `context/` - contextAPI para compartilhamento de dados entre componentes;
 
 ---
 
 ## 💻 Pré-requisitos
 
-* Node.js ≥ 16.x
-* npm ou yarn
-* Expo CLI ou React Native CLI
-* Android Studio + AVD (ou dispositivo Android físico conectado)
+Para executar o projeto corretamente, certifique-se de ter os seguintes recursos instalados e configurados:
 
----
+- **Node.js** (versão 16.x ou superior):
+  - [Download Node.js](https://nodejs.org/)
+  - Verifique com: `node -v`
+
+- **npm** (gerenciador de pacotes que vem com o Node.js) ou **Yarn**:
+  - Verifique com: `npm -v` ou `yarn -v`
+
+- **Expo CLI** (para projetos Expo Managed):
+  ```bash
+  npm install -g expo-cli
+  ```
+  - Verifique a instalação com: `expo --version`
+
+- **Expo Go App** (para testes no celular):
+  - Baixe na [Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) ou [App Store](https://apps.apple.com/app/expo-go/id982107779)
+  - Escaneie o QR Code exibido após `expo start`
+
+- **EAS CLI** (caso vá usar build local ou remota):
+  ```bash
+  npm install -g eas-cli
+  ```
+  - Verifique com: `eas --version`
+
+- **Android Studio**:
+  - Necessário para compilar APKs localmente (Bare Workflow);
+  - Inclui emulador Android (AVD) para testes;
+
+- **Dispositivo físico Android** (opcional):
+  - Ative a depuração USB;
+  - Conecte via cabo ou pela rede local.
+
 
 ## ⚖️ Instalação & Execução
 
@@ -62,16 +91,13 @@
 
 4. **No emulador ou dispositivo:**
 
-   * Use **Expo Go** (se estiver no Managed Workflow);
-   * Ou no terminal:
-
+   - Use **Expo Go** ;
+   - Ou no terminal:
      ```bash
      npx react-native run-android
      ```
-
      (no caso de Bare Workflow / ejetado)
 
----
 
 ## 📦 Gerando o APK
 
@@ -79,7 +105,7 @@
 
 1. Abra `android/` no Android Studio;
 2. Vá em **Build → Build Bundle(s) / APK(s) → Build APK(s)**;
-3. O APK estará em:
+3. O APK estará em:\
    `android/app/build/outputs/apk/debug/app-debug.apk`
 
 ### B) **Com EAS CLI (local):**
@@ -87,10 +113,10 @@
 ```bash
 eas build --platform android --local
 ```
+** Só funcionando em Linux e MacOS.
 
 Gera o APK em `dist/`.
 
----
 
 ## 🧩 Fluxo de Uso
 
@@ -104,8 +130,8 @@ Ideia central: tornar a organização dos pedidos e compras mais eficiente para 
 
 ## 🎓 Sobre o Projeto
 
-> **Disciplina**: Programação para Dispositivos Móveis (Android)
+> **Disciplina**: Programação para Dispositivos Móveis em Android
 > **Tipo de Atividade**: Projeto de Extensão
-> **Objetivo**: Desenvolver habilidades de mobile dev e entregar uma solução real para gerenciamento de pedidos e compras no contexto de personal chef.
+> **Objetivo**: Desenvolver habilidades de desenvolvimento mobile e entregar uma solução real com impacto sociocomunitário.
 
 ---
